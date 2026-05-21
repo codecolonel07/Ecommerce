@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import HomePage from "./pages/Homepage";
-import LoginPage from "./pages/Loginpage";
-import RegisterPage from "./pages/Registerpage";
+import LoginPage from "./pages/auth/Loginpage";
+import RegisterPage from "./pages/auth/Registerpage";
 
 function App() {
   return (
