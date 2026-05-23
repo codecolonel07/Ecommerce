@@ -1,34 +1,76 @@
-import TextInput from "../../components/forms/TextInput";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+import { registerUser } from "../../service/Authservice";
+
+import type {RegisterRequest,} from "../../types/auth/types";
 
 const RegisterPage = () => {
+
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+  } = useForm<RegisterRequest>();
+
+  const onSubmit = async (
+    data: RegisterRequest
+  ) => {
+
+    try {
+
+      await registerUser(data);
+
+      navigate("/login");
+
+    } catch (error) {
+
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
 
-      <div className="w-full max-w-md p-8 shadow-lg rounded-2xl">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md p-8 shadow-lg rounded-2xl flex flex-col gap-4"
+      >
 
-        <h1 className="text-3xl font-bold mb-6 text-center">
-          Login
+        <h1 className="text-3xl font-bold text-center">
+          Register
         </h1>
 
-        <div className="flex flex-col gap-4">
-          <TextInput
-            label="Email"
-            type="email"
-            placeholder="Enter your email"
-          />
+        <input
+          type="text"
+          placeholder="Name"
+          {...register("name")}
+          className="border p-3 rounded-lg"
+        />
 
-          <TextInput
-            label="Password"
-            type="password"
-            placeholder="Enter password"
-          />
+        <input
+          type="email"
+          placeholder="Email"
+          {...register("email")}
+          className="border p-3 rounded-lg"
+        />
 
-          <button className="bg-black text-white py-3 rounded-lg">
-            Login
-          </button>
-        </div>
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password")}
+          className="border p-3 rounded-lg"
+        />
 
-      </div>
+        <button
+          type="submit"
+          className="bg-black text-white py-3 rounded-lg hover:opacity-90"
+        >
+          Register
+        </button>
+
+      </form>
     </div>
   );
 };
