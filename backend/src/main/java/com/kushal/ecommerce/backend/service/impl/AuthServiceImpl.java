@@ -5,6 +5,7 @@ import com.kushal.ecommerce.backend.dto.request.RegisterRequest;
 import com.kushal.ecommerce.backend.dto.response.AuthResponse;
 import com.kushal.ecommerce.backend.entity.Role;
 import com.kushal.ecommerce.backend.entity.User;
+import com.kushal.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.kushal.ecommerce.backend.repository.UserRepository;
 import com.kushal.ecommerce.backend.security.JwtService;
 import com.kushal.ecommerce.backend.service.interfaces.AuthService;
@@ -25,13 +26,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
-
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new ResourceAlreadyExistsException("Email already registered");
+        }
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
-                .password(
-                        passwordEncoder.encode(request.getPassword())
-                )
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
 
@@ -40,18 +41,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest request) {
-
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
-
-        String token = jwtService.generateToken(
-                request.getEmail()
-        );
-
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        String token = jwtService.generateToken(request.getEmail());
         return new AuthResponse(token);
     }
 }
