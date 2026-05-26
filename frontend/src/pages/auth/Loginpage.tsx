@@ -1,23 +1,28 @@
 import { useForm } from "react-hook-form";
+import {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../service/Authservice";
 import type { LoginRequest } from "../../types/auth/types";
+import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm<LoginRequest>();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);  
   const { login } = useAuth();
-  const onSubmit = async (
-    data: LoginRequest
-  ) => {
-
+  const onSubmit = async (data: LoginRequest) => {
     try {
+      setLoading(true);
       const response = await loginUser(data);
       login(response.token);
+      toast.success("Login successful");
       navigate("/");
     } catch (error) {
+      toast.error("Invalid credentials");
       console.error(error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -47,8 +52,8 @@ const LoginPage = () => {
           className="border p-3 rounded-lg"
         />
 
-        <button type='submit' className="bg-black text-white py-3 rounded-lg">
-          Login
+        <button type='submit' disabled = {loading} className="bg-black text-white py-3 rounded-lg">
+          {loading ? "Loading..." : "Login"}
         </button>
 
       </form>
