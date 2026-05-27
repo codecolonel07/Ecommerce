@@ -9,11 +9,7 @@ export const loginUser = async (
   data: LoginRequest
 ): Promise<AuthResponse> => {
 
-  const response = await axiosInstance.post(
-    "/auth/login",
-    data
-  );
-
+  const response = await axiosInstance.post("/auth/login",data);
   return response.data;
 };
 
@@ -21,10 +17,6 @@ export const registerUser = async (
   data: RegisterRequest
 ) => {
 
-  const response = await axiosInstance.post(
-    "/auth/register",
-    data
-  );
-
+  const response = await axiosInstance.post("/auth/register",data);
   return response.data;
 };
