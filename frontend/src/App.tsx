@@ -4,7 +4,7 @@ import Navbar from "./components/layout/Navbar";
 import HomePage from "./pages/Homepage";
 import LoginPage from "./pages/auth/Loginpage";
 import RegisterPage from "./pages/auth/Registerpage";
-import ProtectedRoute from "../src/routes/ProtectedRoutes";
+import ProtectedRoute from "./routes/ProtectedRoutes";
 
 function App() {
 

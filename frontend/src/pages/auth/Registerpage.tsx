@@ -20,33 +20,33 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-md p-8 shadow-lg rounded-2xl flex flex-col gap-4"
+        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl"
       >
         <h1 className="text-3xl font-bold text-center">Register</h1>
         <input
           type="text"
           placeholder="Name"
           {...register("name")}
-          className="border p-3 rounded-lg"
+          className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
         />
         <input
           type="email"
           placeholder="Email"
           {...register("email")}
-          className="border p-3 rounded-lg"
+          className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
         />
         <input
           type="password"
           placeholder="Password"
           {...register("password")}
-          className="border p-3 rounded-lg"
+          className="border p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
         />
         <button
           type="submit"
-          className="bg-black text-white py-3 rounded-lg hover:opacity-90"
+          className="bg-black text-white py-3 rounded-lg hover:opacity-90 transition"
         >
           Register
         </button>
