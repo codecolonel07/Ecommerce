@@ -3,6 +3,7 @@ package com.kushal.ecommerce.backend.service.impl;
 import com.kushal.ecommerce.backend.dto.request.ProductRequest;
 import com.kushal.ecommerce.backend.dto.response.ProductResponse;
 import com.kushal.ecommerce.backend.entity.Product;
+import com.kushal.ecommerce.backend.exception.ResourceNotFoundException;
 import com.kushal.ecommerce.backend.repository.ProductRepository;
 import com.kushal.ecommerce.backend.service.interfaces.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductResponse getProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         return mapToResponse(product);
     }
 
